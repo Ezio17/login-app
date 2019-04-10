@@ -1,3 +1,25 @@
+body {
+  background-color: #c6cad1;
+}
 
+.bg-light {
+  background-color: #8796af !important;
+}
 
+.sign-up-block {
+  height: auto;
+  width: 400px;
+  background-color: grey;
+  margin-top: 50px;
+  padding: 10px;
+  border-radius: 25px;
+}
 
+.registration {
+  margin-top: 40px;
+  font-size: 900;
+}
+
+.password-is-not-equql {
+  color: red;
+}
