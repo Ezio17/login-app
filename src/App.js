@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import Header from './components/Header'
+import Login from './components/Login'
+import SignUp from './components/SignUp'
 
 class App extends Component {
+  // componentDidMount() {
+  //   getUsers().then(console.log)
+  // }
+
   render() {
     return (
-      <div className="App">
-        Hello 123
-      </div>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Switch>
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" component={Login} />
+          <Route path="/" component={Header} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
