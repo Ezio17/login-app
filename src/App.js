@@ -7,10 +7,6 @@ import Login from './components/Login'
 import SignUp from './components/SignUp'
 
 class App extends Component {
-  // componentDidMount() {
-  //   getUsers().then(console.log)
-  // }
-
   render() {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
