@@ -1,38 +1,25 @@
 import React from 'react'
 
+import Header from './Header'
+import UsersContext from './../context'
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
 
-    this.users = [];
-    this.getUsers()
-
     this.state = {
-      firstName: '',
-      lastName: '',
       email: '',
       password: '',
-      confirmPassword: '',
-      equalPassword: true,
-      checkMail: true
+      users: [],
+      isAuthorithed: false,
     }
 
-    this.handleChangeFirstName = this.handleChangeFirstName.bind(this)
-    this.handleChangeLastName = this.handleChangeLastName.bind(this)
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
-    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(this)
-    this.createUser = this.createUser.bind(this)
-    this.getUsers = this.getUsers.bind(this)
+    this.sendData = this.sendData.bind(this)
   }
 
-  handleChangeFirstName(event) {
-    this.setState({ firstName: event.target.value });
-  }
-
-  handleChangeLastName(event) {
-    this.setState({ lastName: event.target.value });
-  }
+  static contextType = UsersContext;
 
   handleChangeEmail(event) {
     this.setState({ email: event.target.value });
@@ -42,110 +29,48 @@ class Login extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleChangeConfirmPassword(event) {
-    this.setState({ confirmPassword: event.target.value })
-  }
-
   sendData(event) {
     event.preventDefault();
-    const { firstName, lastName, email, password, confirmPassword } = this.state
-    this.userMail = ''
+    const { email, password, users } = this.state
 
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].email === email) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].email === email && users[i].password === password) {
         this.setState({
-          checkMail: false
+          isAuthorithed: true,
         })
 
+        this.context.getEmail(users[i].email)
         return
       }
     }
 
-    let equalPassword = true;
-    if (password !== confirmPassword) {
-      equalPassword = false;
-    }
-
-    this.setState({
-      equalPassword,
-    })
-
-    if (firstName === '' ||
-      lastName === '' ||
-      email === '' ||
-      password === '' ||
-      confirmPassword === '') {
-      alert('Заполните все поля')
-      return
-    }
-
-    if (!equalPassword) {
-      return
-    }
-
-    let user = {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-    }
-
-    this.createUser(user)
+    alert('Неверная почта или пароль')
   }
 
-  createUser(user) {
-    fetch('http://localhost:5000/api/users', {
-      method: 'POST',
-      body: JSON.stringify(user),
-    }).then(res => res.json())
-      .then(data => console.log(data));
-  }
-
-  getUsers() {
+  componentDidMount() {
     fetch('http://localhost:5000/api/users')
       .then(response => response.json())
-      .then(users => this.users = users)
+      .then(users => {
+        this.setState({
+          users,
+        })
+      })
   }
 
-
-
   render() {
-    const { firstName, lastName, email, password, confirmPassword, equalPassword, checkMail } = this.state
+    const { email, password } = this.state
 
     return (
-      <div className="container" >
+      <div className="container">
+        <Header />
         <div className="row justify-content-center">
-          <h1 className="registration">Registration</h1>
+          <h1 className="registration">Sign up</h1>
         </div>
-        <div className="row justify-content-center">
+        <div className='row justify-content-center'>
           <div className="sign-up-block">
-            <form id="form">
-              <div className="form-group">
-                <label htmlFor="firstName">First name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="firstName"
-                  placeholder="Firs name"
-                  value={firstName}
-                  onChange={this.handleChangeFirstName}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  placeholder="Last name"
-                  value={lastName}
-                  onChange={this.handleChangeLastName}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email address</label>
+            <form>
+              <div className="form-group text-center">
+                <label htmlFor="email">Email address</label>
                 <input
                   type="email"
                   className="form-control"
@@ -155,11 +80,9 @@ class Login extends React.Component {
                   value={email}
                   onChange={this.handleChangeEmail}
                 />
-                {checkMail ? '' : <p className="password-is-not-equql">
-                  This mail is already in use</p>}
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
+              <div className="form-group text-center">
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   className="form-control"
@@ -168,26 +91,16 @@ class Login extends React.Component {
                   value={password}
                   onChange={this.handleChangePassword}
                 />
-                {equalPassword ? '' : <p className="password-is-not-equql">Password isn't equal</p>}
-              </div>
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="confirmPassword"
-                  placeholder="Password"
-                  value={confirmPassword}
-                  onChange={this.handleChangeConfirmPassword}
-                />
-                {equalPassword ? '' : <p className="password-is-not-equql">Password isn't equal</p>}
               </div>
               <div className="col text-center">
+
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  onClick={this.sendData.bind(this)}
-                >Submit</button>
+                  onClick={this.sendData}
+                >
+                  Submit
+                </button>
               </div>
             </form>
           </div>
@@ -195,7 +108,6 @@ class Login extends React.Component {
       </div>
     )
   }
-
 }
 
 export default Login

@@ -1,0 +1,30 @@
+[
+  {
+    "firstName": "dsa",
+    "lastName": "Shcherba",
+    "email": "kola-199817@mail.ru",
+    "password": "a",
+    "confirmPassword": "a"
+  },
+  {
+    "firstName": "dsa",
+    "lastName": "Shcherba",
+    "email": "shcherba.kolya17@gmail.com",
+    "password": "a",
+    "confirmPassword": "a"
+  },
+  {
+    "firstName": "dsa",
+    "lastName": "Shcherba",
+    "email": "das@fsdfs",
+    "password": "a",
+    "confirmPassword": "a"
+  },
+  {
+    "firstName": "dsa",
+    "lastName": "Shcherba",
+    "email": "dsafd@fdgfd",
+    "password": "a",
+    "confirmPassword": "a"
+  }
+]
