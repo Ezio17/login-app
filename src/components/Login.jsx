@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Header from './Header'
 import UsersContext from './../context'
 
 class Login extends React.Component {
@@ -62,7 +61,6 @@ class Login extends React.Component {
 
     return (
       <div className="container">
-        <Header />
         <div className="row justify-content-center">
           <h1 className="registration">Sign up</h1>
         </div>

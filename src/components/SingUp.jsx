@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Header from './Header'
-
 class SignUp extends React.Component {
   constructor(props) {
     super(props)
@@ -123,7 +121,6 @@ class SignUp extends React.Component {
 
     return (
       <div className="container" >
-        <Header />
         <div className="row justify-content-center">
           <h1 className="registration">Registration</h1>
         </div>

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Header from './Header'
 import UsersContext from './../context'
 
 class HomePage extends React.Component {
@@ -27,7 +26,6 @@ class HomePage extends React.Component {
     const { email } = this.context
     return (
       <>
-        <Header />
         <div className="container">
           <div className="row justify-content-center">
             <table id="info-table">

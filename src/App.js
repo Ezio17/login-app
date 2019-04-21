@@ -6,6 +6,7 @@ import Login from './components/Login'
 import SignUp from './components/SingUp'
 import HomePage from './components/HomePage'
 import UsersContext from './context'
+import Header from './components/Header'
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class App extends Component {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <UsersContext.Provider value={value}>
+          <Header />
           <Switch>
             <Route path="/signup" component={SignUp} />
             <Route path="/signin" component={Login} />} />
